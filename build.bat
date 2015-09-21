@@ -1,0 +1,1 @@
+emcc src/main.cpp -o jsvbsp.js -s EXPORTED_FUNCTIONS="['_initRenderer','_loadMap']" -s TOTAL_MEMORY=83886080 -s MODULARIZE=1 -s EXPORT_NAME='VBSP' --post-js src/post.js

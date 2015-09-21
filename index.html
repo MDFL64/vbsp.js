@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title>vbsp.js Demo</title>
+		<style>
+			html {font-family: arial;}
+		</style>
+	</head>
+	<body>
+		<div id="render" style="width: 800px; height: 600px; display: inline-block;"></div>
+		
+		<div style="display: inline-block; vertical-align: top;">
+			<h1>vbsp.js Demo</h1>
+			<p>Click a button to load a map.</p>
+			<p>Click and drag to look around. While looking, use WASD to move and F to move fast.</p>
+			<p>Please be patient. Downloading the renderer and the map can take a long time.</p>
+			
+			<h2>Garrysmod</h2>
+			<button onclick='map.loadMap("http://cogg.rocks/rp_downtown_v2.bsp");'>rp_downtown_v2</button>
+			<button onclick='map.loadMap("gm_bigcity.bsp");'>gm_bigcity</button>
+			
+			<p>None of these maps are mine. Contact dameerkat@gmail.com if you have complaints.</p>
+		</div>
+		
+		<script src="jsvbsp.js"></script>
+
+		<script>
+		var map = new VBSP();
+		map.initRenderer(document.getElementById("render"));
+		</script>
+	</body>
+</html>
