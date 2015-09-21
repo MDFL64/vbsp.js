@@ -10,3 +10,4 @@ Horribly coded, but fairly efficient. Built with emscripten.
 ## Current Issues
 - Models are all dumped at the origin.
 - Displacements are unsupported.
+- Old BSP formats are unsupported. Really recent versions may also be unsupported.
