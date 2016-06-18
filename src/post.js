@@ -152,6 +152,7 @@ color_table = {
 	"building_template/building_template002c": colors.off_white,
 	"building_template/building_template002e": colors.off_white,
 	"building_template/building_template002h": colors.off_white,
+	"building_template/building_template002k": colors.off_white,
 	"building_template/building_template002l": colors.off_white,
 	"building_template/building_template002m": colors.off_white,
 	"building_template/building_template002n": colors.off_white,
@@ -163,6 +164,7 @@ color_table = {
 	
 	"building_template/building_template005c": colors.plaster_dark,
 	"building_template/building_template005f": colors.plaster_dark,
+	"building_template/building_template005g": colors.plaster_dark,
 	
 	"building_template/building_template006b": colors.black, // dark glass
 	
@@ -183,6 +185,7 @@ color_table = {
 	"building_template/building_template010g": colors.glass,
 	
 	"building_template/building_template012e": colors.plaster_dark,
+	"building_template/building_template012i": 0xE3BD64,
 	
 	"building_template/building_template013a": colors.plaster_dark,
 	"building_template/building_template013b": colors.plaster_dark, //tanish
@@ -212,6 +215,7 @@ color_table = {
 	
 	"cs_havana/ceiling01": colors.white,
 	"de_piranesi/marblefloor01": colors.concrete,
+	"de_train/train_glasswindow_01": colors.black,
 	
 	"concrete/concreteceiling003a": colors.white,
 	"concrete/concretefloor026a": colors.concrete_dark,
@@ -219,6 +223,8 @@ color_table = {
 	"concrete/concretewall059d": colors.concrete_dark,
 	"concrete/concretewall059e": colors.concrete_dark,
 	"gm_construct/construct_concrete_ground": colors.concrete_dark,
+	
+	"props/tarpaperroof002a": colors.concrete_dark,
 	
 	"tile/tileroof002a": 0x4c474e,
 	"tile/tileroof004a": 0x876260,
@@ -270,12 +276,17 @@ color_table = {
 	"metal/metalwall004c": 0xE3D966,
 	"metal/metalwall004e": 0xE3D966,
 	
+	"metal/metalwall018a_cheap": 0xC4E7F2,
+	"metal/metalwall018f_cheap": 0xC4E7F2,
+	"metal/metalwall018e_cheap": 0xC4E7F2,
+	
 	"metal/metalwall021a_cheap": 0x6e534b,
 	"metal/metalwall021b_cheap": 0x6e534b,
 	"metal/metalwall021d": 0x6e534b,
 	"metal/metalwall021d_cheap": 0x6e534b,
 	"metal/metalwall021e_cheap": 0x6e534b,
 	"metal/metalwall021f_cheap": 0x6e534b,
+	
 	
 	"metal/metalwall070a_cheap": 0xFCFFAD,
 	"metal/metalwall070e_cheap": 0xFCFFAD,
@@ -289,8 +300,52 @@ color_table = {
 	"tools/toolstrigger": 0xFFFFFFFF,
 	"tools/toolsblack": 0,
 	
-	"shadertest/gooinglass": 0xFF7300
+	"shadertest/gooinglass": 0xFF7300,
 	
+	"building_template/building_template002cz": 0xFFFF00,
+	"building_template/building_template003bz": 0xFFFF00,
+	"building_template/building_template005bz": 0xFFFF00,
+	"building_template/building_template005cz": 0xFFFF00, // dark plaster
+	"building_template/building_template006az": 0xFFFF00, // same as below, but white (no windows!)
+	"building_template/building_template006bz": 0xFFFF00, // dark windows on big towers
+	"building_template/building_template012dz": 0xFFFF00,
+	
+	
+	"building_template/building_template019cz": 0xFFFF00,
+	"building_template/building_template019kz": 0xFFFF00,
+	"building_template/building_template027cz": 0xFFFF00,
+	"building_template/building_template002bz": 0xFFFF00,
+	"building_template/building_template003ez": 0xFFFF00,
+	"building_template/building_template004bz": 0xFFFF00,
+	"building_template/building_template020bz": 0xFFFF00,
+	"building_template/building_template001bz": 0xFFFF00,
+	"building_template/building_template012fz": 0xFFFF00,
+	"building_template/building_template002iz": 0xFFFF00,
+	"building_template/building_template017kz": 0xFFFF00,
+	"building_template/building_template017cz": 0xFFFF00,
+	"building_template/building_template014bz": 0xFFFF00,
+	"building_template/building_template019dz": 0xFFFF00,
+	"building_template/building_template003nz": 0xFFFF00,
+	"building_template/building_template001fz": 0xFFFF00,
+	"building_template/courtyard_template003fz": 0xFFFF00,
+	"building_template/building_template012hz": 0xFFFF00,
+	"building_template/courtyard_template001gz": 0xFFFF00,
+	"building_template/courtyard_template001fz": 0xFFFF00,
+	"building_template/courtyard_template002gz": 0xFFFF00,
+	"building_template/courtyard_template001cz": 0xFFFF00,
+	"building_template/courtyard_template005fz": 0xFFFF00,
+	"building_template/building_template003hz": 0xFFFF00,
+	"building_template/building_template012cz": 0xFFFF00,
+	"building_template/building_template012ez": 0xFFFF00,
+	"building_template/building_template003dz": 0xFFFF00,
+	
+	"building_template/nukdoorsbz": 0xFFFF00,
+	
+	"building_template/courtyard_template003bz": 0xFFFF00,
+	
+	
+	"building_template/building_trainstation_template002bz": 0xFFFF00,
+	"building_template/building_trainstation_template002cz": 0xFFFF00,
 	
 	//"coalmines/blendgroundtowall_coalmines": 0xCC9C68, //TF2
 };
@@ -303,6 +358,9 @@ function pick_color(name) {
 		
 	if (name.indexOf("cement") > -1)
 		return colors.concrete;
+		
+	if (name.indexOf("pavement") > -1)
+		return colors.concrete_dark;
 		
 	if (name.indexOf("plaster") > -1)
 		return colors.plaster;
@@ -320,7 +378,7 @@ function pick_color(name) {
 	if (name.indexOf("plastic") > -1)
 		return colors.white;
 	
-	if (name.indexOf("glass") > -1)
+	if (name.indexOf("glass") > -1 || name.indexOf("window") > -1)
 		return colors.glass;
 	
 		
@@ -347,6 +405,9 @@ function pick_color(name) {
 		
 	if (name.indexOf("water") > -1)
 		return colors.water;
+		
+	if (name.indexOf("slime") > -1)
+		return 0x808000;
 		
 	if (name.indexOf("button") > -1)
 		return 0xFF0000;

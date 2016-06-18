@@ -286,9 +286,10 @@ int loadMap(bsp_header_t* bsp_file) {
 	std::vector<gl_vert_t> mesh_opaque;
 	std::vector<gl_vert_t> mesh_trans;
 	std::vector<gl_vert_t> mesh_sky;
+
+	// texture_info[0].texdata
 	
-	
-	
+
 	for (int i=0; i < model_count; i++) {
 		int start_face = models[i].firstface;
 		int last_face = models[i].firstface + models[i].numfaces;
@@ -312,7 +313,7 @@ int loadMap(bsp_header_t* bsp_file) {
 			//texture_data[texture_info[faces[j].texinfo].texdata].nameStringTableID;
 			
 			char* texture_name = &texture_string_data[texture_string_table[texture_data[texture_info[faces[j].texinfo].texdata].nameStringTableID]];
-			
+
 			//printf("ch %s %i\n",texture_name,texture_info[faces[j].texinfo].flags);
 			
 			float tex_r;
@@ -595,7 +596,7 @@ void doFrame() {
 	glClearColor(.2,.2,.2,0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	
-	double fov = 70;
+	double fov = 40;
 	
 	glm::mat4 matrix = glm::perspective(fov*PI_OVER_180,aspect,1.0,1000000.0);
 	
@@ -748,10 +749,4 @@ const char* initRenderer(int w, int h) {
 	glGenBuffers(1, &h_vertexbuffer_sky);
  
     return 0;
-}
-
-extern "C"
-int main() {
-	printf("ready\n");
-	return 0;
 }
