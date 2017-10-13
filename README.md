@@ -2,7 +2,7 @@
 
 VBsp.js is a minimalistic WebGL renderer for Source Engine maps.
 
-##Features
+## Features
 - Makes it easy to embed 3D previews of Source Engine maps in a website.
 - Supports maps for the following popular games:
 -- Half Life 2
