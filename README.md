@@ -61,10 +61,10 @@ Read the section below for more information on editing the source.
 To build the module, install [emscripten](https://kripken.github.io/emscripten-site/) and run build.bat.
 
 Here is a short overview of the project's structure:
-- main.cpp contains the entire C++ portion of the code, including the BSP parser and OpenGL renderer.
-- library.js contains some library functions written in javascript that are used by the C++ portion.
-- post.js contains wrappers around some C++ functions that make them easier to use. It is also responsible for the color guessing logic.
-- kvparse.js contains a parser for Valve's [KeyValues](https://developer.valvesoftware.com/wiki/KeyValues) format, which is used to parse the entity lump in the BSP file.
+- [main.cpp](/blob/master/src/main.cpp) contains the entire C++ portion of the code, including the BSP parser and OpenGL renderer.
+- [library.js]() contains some library functions written in javascript that are used by the C++ portion.
+- [post.js]() contains wrappers around some C++ functions that make them easier to use. It is also responsible for the color guessing logic.
+- [kvparse.js]() contains a parser for Valve's [KeyValues](https://developer.valvesoftware.com/wiki/KeyValues) format, which is used to parse the entity lump in the BSP file.
 
 ## Optimization
 
