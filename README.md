@@ -43,25 +43,28 @@ While VBsp.js may be improved to take advantage of more lumps in the future, it 
 
 I may release a program that removes lumps uncessesary for rendering in the future.
 
-## Building and Modifying the Code
-
-To build the module, install [emscripten](https://kripken.github.io/emscripten-site/) and run build.bat.
-
-Here is a short overview of the project's structure:
-- main.cpp contains the entire C++ portion of the code. It contains the BSP parser and the renderer, which is written in OpenGL.
-- library.js contains some library functions written in javascript that are used by the C++ portion.
-- post.js contains wrappers around some C++ functions that make them easier to use. It also contains the color guessing logic. 
-- kvparse.js contains a parser for Valve's [KeyValues](https://developer.valvesoftware.com/wiki/KeyValues) format, which is used to parse the entity lump in the BSP file.
+## Planned Features
+- Provide a minified build and a webassembly build.
+- Support more variants of the BSP file format.
+- Generate a much larger and more accurate lookup table of material colors.
+- Add sky materials to color lookup.
+- Add support for simple lighting.
 
 ## Contributing
 
 Pull requests and issues are always welcome, but please remember that this is intended to be a minimalistic renderer. A change that improves color selection logic would be welcome. A change that implements loading of other Source Engine assets might not be accepted.
 
-## Planned Features
-- Support more variants of the BSP file format.
-- Generate a much larger and more accurate lookup table of material colors.
-- Add sky materials to color lookup.
-- Add support for simple lighting.
+Read the section below for more information on editing the source.
+
+## Building and Modifying the Code
+
+To build the module, install [emscripten](https://kripken.github.io/emscripten-site/) and run build.bat.
+
+Here is a short overview of the project's structure:
+- main.cpp contains the entire C++ portion of the code, including the BSP parser and OpenGL renderer.
+- library.js contains some library functions written in javascript that are used by the C++ portion.
+- post.js contains wrappers around some C++ functions that make them easier to use. It is also responsible for the color guessing logic.
+- kvparse.js contains a parser for Valve's [KeyValues](https://developer.valvesoftware.com/wiki/KeyValues) format, which is used to parse the entity lump in the BSP file.
 
 ## Optimization
 
