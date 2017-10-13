@@ -2,6 +2,8 @@
 
 VBsp.js is a minimalistic WebGL renderer for Source Engine maps.
 
+For a demo, click [here](http://cogg.rocks/vbsp/).
+
 ## Features
 - Makes it easy to embed 3D previews of Source Engine maps in a website.
 - High Performance: Written in C++ and compiled to javascript using emscripten.
@@ -13,8 +15,6 @@ VBsp.js is a minimalistic WebGL renderer for Source Engine maps.
   - Garry's Mod
 - Users are able to navigate the previews using familiar controls.
 - Does not require any game assets. All colors in the previews are guessed by checking material names against a lookup table.
-
-For a demo, click [here](http://cogg.rocks/vbsp/).
 
 ## Usage
 
