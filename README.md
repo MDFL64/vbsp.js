@@ -19,6 +19,9 @@ For a demo, click [here](http://cogg.rocks/vbsp/).
 ## Usage
 
 Basic usage is easy, and only requires a few lines of code.
+
+1. Make sure both vbsp.js and vbsp.js.mem are available on your server. **Warning:** Due to the way the module is loaded, it can not be tested locally and must be served by a webserver.
+2. Use or edit the following code:
 ```html
 <div id="render" style="width: 800px; height: 600px; display: inline-block;"></div>
 <script src="vbsp.js"></script>
@@ -31,16 +34,34 @@ Basic usage is easy, and only requires a few lines of code.
   });
 </script>
 ```
-1. Create an element to place the renderer in.
-2. Include the vbsp.js script.
-3. From a script, create a new `VBSP` module.
-4. From within a callback passed to `ready()` method of the module:
-    1. Initialize the renderer on the element you created earlier.
-    2. Tell the renderer to load and render a map.
+- **Warning:** The `VBSP` module can not be used until it is ready.
+- Use `VBSP.initRenderer(element)` to setup the renderer and place it in a DOM element.
+- Use `VBSP.loadMap(url)` to load a map from a URL.
+- Use `VBSP.setCam(x,y,z,pitch,yaw)` to control the position and angle of the camera. Both pitch and yaw are measured in degrees.
 
-**Warning:** The `VBSP` module can not be used until it is ready.
+While VBsp.js may be improved to take advantage of more lumps in the future, it should still function with only the lumps listed here.
 
-**Warning:** Due to the way the module is built, it can not be loaded from the filesystem and must be served from a webserver.
+I may release a program that removes lumps uncessesary for rendering in the future.
+
+## Building and Modifying the Code
+
+To build the module, you must install [emscripten](https://kripken.github.io/emscripten-site/) and run build.bat.
+
+Here is a short overview of the project's structure:
+- main.cpp contains the entire C++ portion of the code. It contains the BSP parser and the renderer, which is written in OpenGL.
+- library.js contains some library functions written in javascript that are used by the C++ portion.
+- post.js contains wrappers around some C++ functions that make them easier to use. It also contains the color guessing logic. 
+- kvparse.js contains a parser for Valve's [KeyValues](https://developer.valvesoftware.com/wiki/KeyValues) format, which is used to parse the entity lump in the BSP file.
+
+## Contributing
+
+Pull requests and issues are always welcome, but please remember that this is intended to be a minimalistic renderer. A change that improves color selection logic would be welcome. A change that implements loading of other Source Engine assets might not be accepted.
+
+## Planned Features
+- Support more variants of the BSP file format.
+- Generate a much larger and more accurate lookup table of material colors.
+- Add sky materials to color lookup.
+- Add support for simple lighting.
 
 ## Optimization
 
@@ -64,15 +85,9 @@ LUMP_TEXDATA_STRING_DATA  43
 LUMP_TEXDATA_STRING_TABLE 44
 ```
 
-While VBsp.js may be improved to take advantage of more lumps in the future, it should still function with only the lumps listed here.
-
-I may release a program that removes lumps uncessesary for rendering in the future.
-
-## Contributing
-
-Pull requests and issues are always welcome, but please remember that this is intended to be a minimalistic renderer.
-
 ## Acknowledgements
-The Valve developer wiki's [Source BSP File Format](https://developer.valvesoftware.com/wiki/Source_BSP_File_Format) was vital in the creation of this library.
+The Valve developer wiki's [Source BSP File Format](https://developer.valvesoftware.com/wiki/Source_BSP_File_Format) article was vital in the creation of this library.
 
 Some of the BSP structures were copied from [bspfile.h](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/public/bspfile.h) in the Source SDK.
+
+The [OpenGL Mathematics](https://glm.g-truc.net/0.9.8/index.html) library was used to make dealing with OpenGL less painful.
