@@ -45,7 +45,7 @@ I may release a program that removes lumps uncessesary for rendering in the futu
 
 ## Building and Modifying the Code
 
-To build the module, you must install [emscripten](https://kripken.github.io/emscripten-site/) and run build.bat.
+To build the module, install [emscripten](https://kripken.github.io/emscripten-site/) and run build.bat.
 
 Here is a short overview of the project's structure:
 - main.cpp contains the entire C++ portion of the code. It contains the BSP parser and the renderer, which is written in OpenGL.
