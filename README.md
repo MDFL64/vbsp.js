@@ -10,7 +10,7 @@ For a demo, click [here](http://cogg.rocks/vbsp/).
 - Supports maps for many popular games, including the following:
   - Half Life 2
   - Team Fortress 2
-  - Counter-Stike Source
+  - Counter-Strike Source
   - Portal
   - Garry's Mod
 - Users are able to navigate the previews using familiar controls.
@@ -35,13 +35,13 @@ Basic usage is easy, and only requires a few lines of code.
 </script>
 ```
 - **Warning:** The `VBSP` module can not be used until it is ready.
-- Use `VBSP.initRenderer(element)` to setup the renderer and place it in a DOM element.
+- Use `VBSP.initRenderer(element)` to set up the renderer and place it in a DOM element.
 - Use `VBSP.loadMap(url)` to load a map from a URL.
 - Use `VBSP.setCam(x,y,z,pitch,yaw)` to control the position and angle of the camera. Both pitch and yaw are measured in degrees.
 
 While VBsp.js may be improved to take advantage of more lumps in the future, it should still function with only the lumps listed here.
 
-I may release a program that removes lumps uncessesary for rendering in the future.
+I may release a program that removes lumps unnecessary for rendering in the future.
 
 ## Planned Features
 - Provide a minified build and a webassembly build.
