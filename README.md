@@ -39,10 +39,6 @@ Basic usage is easy, and only requires a few lines of code.
 - Use `VBSP.loadMap(url)` to load a map from a URL.
 - Use `VBSP.setCam(x,y,z,pitch,yaw)` to control the position and angle of the camera. Both pitch and yaw are measured in degrees.
 
-While VBsp.js may be improved to take advantage of more lumps in the future, it should still function with only the lumps listed here.
-
-I may release a program that removes lumps unnecessary for rendering in the future.
-
 ## Planned Features
 - Provide a minified build and a webassembly build.
 - Support more variants of the BSP file format.
@@ -88,8 +84,12 @@ LUMP_TEXDATA_STRING_DATA  43
 LUMP_TEXDATA_STRING_TABLE 44
 ```
 
+While VBsp.js may be improved to take advantage of more lumps in the future, it should still function with only the lumps listed above.
+
+Unfortunately, removing lumps requires parsing and rebuilding the BSP file, but I may release a program that removes lumps unnecessary for rendering in the future.
+
 ## Acknowledgements
-The Valve developer wiki's [Source BSP File Format](https://developer.valvesoftware.com/wiki/Source_BSP_File_Format) article was vital in the creation of this library.
+The Valve developer wiki's [Source BSP File Format](https://developer.valvesoftware.com/wiki/Source_BSP_File_Format) article was vital to the creation of this library.
 
 Some of the BSP structures were copied from [bspfile.h](https://github.com/ValveSoftware/source-sdk-2013/blob/master/sp/src/public/bspfile.h) in the Source SDK.
 
