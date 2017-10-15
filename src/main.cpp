@@ -325,7 +325,7 @@ int loadMap(bsp_header_t* bsp_file) {
 				tex_g = 0.76;
 				tex_b = 1;
 			} else {
-				int color = pick_color(texture_name);
+				int color = 0xFFFFFF00 >> 8; // pick_color(texture_name); //0xFFFFFF00 >> 8;
 				if (color==-1) // no-draw hinting
 					continue;
 				tex_r = ((color >> 16) & 255) / 255.0f;;
@@ -592,8 +592,7 @@ void doFrame() {
 		was_clicked=false;
 	}
 	
-	//glClearStencil(0);
-	glClearColor(.2,.2,.2,0);
+	glClearColor(.2,.2,.2,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	
 	double fov = 40;
@@ -720,7 +719,7 @@ const char* initRenderer(int w, int h) {
 	varying vec4 color;
 	void main () {
 		gl_FragColor = color;
-		gl_FragColor.w = 0.5;
+		gl_FragColor.w = 1.0;
 	})";
 	
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
