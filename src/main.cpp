@@ -325,7 +325,7 @@ int loadMap(bsp_header_t* bsp_file) {
 				tex_g = 0.76;
 				tex_b = 1;
 			} else {
-				int color = 0xFFFFFF00 >> 8; // pick_color(texture_name); //0xFFFFFF00 >> 8;
+				int color = /*0xFFFFFF00 >> 8;*/ pick_color(texture_name); //0xFFFFFF00 >> 8;
 				if (color==-1) // no-draw hinting
 					continue;
 				tex_r = ((color >> 16) & 255) / 255.0f;;

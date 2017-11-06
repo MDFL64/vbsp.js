@@ -6,8 +6,13 @@ mergeInto(LibraryManager.library, {
 		
 		var match = name.match(/maps\/[^/]*\/(.*)_.*_.*_.*/);
 		
-		if (match != null)
+		if (match != null) {
+			//console.log(name+" -> "+match[1]);
 			name = match[1];
+		}
+		
+		if (name == "tools/toolstrigger")
+			return -1;
 		
 		var color = color_table[name];
 		
@@ -15,11 +20,15 @@ mergeInto(LibraryManager.library, {
 			return color;
 		}
 		
-		color = pick_color(name);
+		console.log(">>> "+name);
+		
+		return 0xFFFFFF;
+		
+		/*color = pick_color(name);
 		
 		color_table[name] = color;
 		
-		return color;
+		return color;*/
 	},
 	parse_ents: function(data) {
 		data = Pointer_stringify(data);

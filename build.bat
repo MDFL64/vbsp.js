@@ -1,1 +1,0 @@
-emcc src/main.cpp -o vbsp.js -std=c++11 -s EXPORTED_FUNCTIONS="['_initRenderer','_loadMap','_setCam','_setSkybox','_setModel']" -s TOTAL_MEMORY=117440512 -s MODULARIZE=1 -s EXPORT_NAME='VBSP' --post-js src/post.js --post-js src/kvparse.js --js-library src/library.js -O1

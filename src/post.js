@@ -139,6 +139,7 @@ var colors = {
 	info: 0x00FFFF
 }
 
+/*
 color_table = {
 	"gm_construct/construct_credits": colors.info,
 	"gm_construct/color_room": 0xffffff,
@@ -349,11 +350,11 @@ color_table = {
 	
 	//"coalmines/blendgroundtowall_coalmines": 0xCC9C68, //TF2
 };
+*/
 
-function pick_color(name) {
-	//console.log(name);
-	
-	if (name.indexOf("concrete") > -1)
+function guess_color(name) {
+
+	/*if (name.indexOf("concrete") > -1)
 		return colors.concrete;
 		
 	if (name.indexOf("cement") > -1)
@@ -365,9 +366,8 @@ function pick_color(name) {
 	if (name.indexOf("plaster") > -1)
 		return colors.plaster;
 	
-	if (name.indexOf("metal") > -1) {
-		return 0x24201b; // good 4 now
-	}
+	if (name.indexOf("metal") > -1)
+		return 0x24201b;
 	
 	if (name.indexOf("brick") > -1)
 		return colors.brick;
@@ -380,7 +380,6 @@ function pick_color(name) {
 	
 	if (name.indexOf("glass") > -1 || name.indexOf("window") > -1)
 		return colors.glass;
-	
 		
 	if (name.indexOf("mud") > -1)
 		return colors.mud;
@@ -397,11 +396,8 @@ function pick_color(name) {
 	if (name.indexOf("grass") > -1)
 		return colors.grass;
 	
-	
-	
 	if (name.indexOf("stone") > -1)
 		return colors.concrete;
-	
 		
 	if (name.indexOf("water") > -1)
 		return colors.water;
@@ -413,7 +409,7 @@ function pick_color(name) {
 		return 0xFF0000;
 	
 	if (name.indexOf("sign") > -1)
-		return 0x008002;
+		return 0x008002;*/
 		
 	/*if (name.indexOf("red") > -1)
 		return 0xEB5B5B;
@@ -423,10 +419,6 @@ function pick_color(name) {
 	
 	//if (name.indexOf("building_template") > -1)
 	//	return 0xFF00FF;
-	
-	console.log("> Can't guess color of \""+name+"\".");
-	
-	return 0xFF00FF;
 }
 
 //Module.load = Module.cwrap("load", "number", []);
