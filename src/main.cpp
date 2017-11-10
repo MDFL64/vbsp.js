@@ -202,10 +202,26 @@ bool skybox_active = false;
 glm::vec3 skybox_pos;
 float skybox_scale;
 
+float sky_r;
+float sky_g;
+float sky_b;
+
+float ambient_r;
+float ambient_g;
+float ambient_b;
+
+float light_r;
+float light_g;
+float light_b;
+
+float light_x;
+float light_y;
+float light_z;
+
 vector_t* model_offsets = 0;
 
 extern "C" {
-	extern int pick_color(char* name);
+	extern int pick_color(char* name,float alpha);
 	extern int parse_ents(char* data);
 
 	void setCam(float x, float y, float z, float pa, float ya) {
@@ -225,6 +241,24 @@ extern "C" {
 		skybox_pos.z = z;
 		
 		skybox_scale = scale;
+	}
+
+	void setAmbient(float r, float g, float b) {
+		ambient_r = r;
+		ambient_g = g;
+		ambient_b = b;
+	}
+
+	void setLight(float r, float g, float b) {
+		light_r = r;
+		light_g = g;
+		light_b = b;
+	}
+
+	void setLightAngle(float pitch, float yaw) {
+		light_x = sin(yaw*PI_OVER_180) * cos(pitch*PI_OVER_180);
+		light_y = cos(yaw*PI_OVER_180) * cos(pitch*PI_OVER_180);
+		light_z = -sin(pitch*PI_OVER_180);
 	}
 	
 	void setModel(int model_id, float x, float y, float z) {
@@ -321,11 +355,11 @@ int loadMap(bsp_header_t* bsp_file) {
 			float tex_b;
 			
 			if (sky) { //7AC3FF
-				tex_r = 0.47;
-				tex_g = 0.76;
-				tex_b = 1;
+				tex_r = sky_r;
+				tex_g = sky_g;
+				tex_b = sky_b;
 			} else {
-				int color = /*0xFFFFFF00 >> 8;*/ pick_color(texture_name); //0xFFFFFF00 >> 8;
+				int color = pick_color(texture_name,0);
 				if (color==-1) // no-draw hinting
 					continue;
 				tex_r = ((color >> 16) & 255) / 255.0f;;
@@ -382,6 +416,7 @@ int loadMap(bsp_header_t* bsp_file) {
 				int verts_wide = (2<<(displacements[faces[j].dispinfo].power-1)) + 1;
 				
 				vector_t base_verts[289];
+				float base_alphas[289];
 				
 				int base_dispvert_index = displacements[faces[j].dispinfo].DispVertStart;
 				
@@ -397,8 +432,10 @@ int loadMap(bsp_header_t* bsp_file) {
 						
 						vector_t offset = disp_verts[base_dispvert_index+i].pos;
 						float scale = disp_verts[base_dispvert_index+i].distance;
+						float alpha = disp_verts[base_dispvert_index+i].alpha / 255;
 						
 						base_verts[i] = mid_base + mid_ray*fx + offset*scale;
+						base_alphas[i] = alpha;
 					}
 				}
 				
@@ -416,50 +453,110 @@ int loadMap(bsp_header_t* bsp_file) {
 						vector_t v2 = base_verts[i+1];
 						vector_t v3 = base_verts[i+verts_wide];
 						vector_t v4 = base_verts[i+verts_wide+1];
+
+						int color1 = pick_color(texture_name, base_alphas[i]);
+						
+						float tex_r1 = ((color1 >> 16) & 255) / 255.0f;;
+						float tex_g1 = ((color1 >> 8) & 255) / 255.0f;
+						float tex_b1 = (color1 & 255) / 255.0f;
+
+						int color2 = pick_color(texture_name, base_alphas[i+1]);
+						
+						float tex_r2 = ((color2 >> 16) & 255) / 255.0f;;
+						float tex_g2 = ((color2 >> 8) & 255) / 255.0f;
+						float tex_b2 = (color2 & 255) / 255.0f;
+
+						int color3 = pick_color(texture_name, base_alphas[i+verts_wide]);
+						
+						float tex_r3 = ((color3 >> 16) & 255) / 255.0f;;
+						float tex_g3 = ((color3 >> 8) & 255) / 255.0f;
+						float tex_b3= (color3 & 255) / 255.0f;
+
+						int color4 = pick_color(texture_name, base_alphas[i+verts_wide+1]);
+
+						float tex_r4 = ((color4 >> 16) & 255) / 255.0f;;
+						float tex_g4 = ((color4 >> 8) & 255) / 255.0f;
+						float tex_b4 = (color4 & 255) / 255.0f;
 						
 						if (i%2) {
 							vert.normal = findNormal(v1,v3,v2);
 							
 							vert.pos = v1;
+							vert.r=tex_r1;
+							vert.g=tex_g1;
+							vert.b=tex_b1;
 							mesh.push_back(vert);
 							
 							vert.pos = v3;
+							vert.r=tex_r3;
+							vert.g=tex_g3;
+							vert.b=tex_b3;
 							mesh.push_back(vert);
 							
 							vert.pos = v2;
+							vert.r=tex_r2;
+							vert.g=tex_g2;
+							vert.b=tex_b2;
 							mesh.push_back(vert);
 							
 							vert.normal = findNormal(v2,v3,v4);
 							
 							vert.pos = v2;
+							vert.r=tex_r2;
+							vert.g=tex_g2;
+							vert.b=tex_b2;
 							mesh.push_back(vert);
 							
 							vert.pos = v3;
+							vert.r=tex_r3;
+							vert.g=tex_g3;
+							vert.b=tex_b3;
 							mesh.push_back(vert);
 							
 							vert.pos = v4;
+							vert.r=tex_r4;
+							vert.g=tex_g4;
+							vert.b=tex_b4;
 							mesh.push_back(vert);
 						} else {
 							vert.normal = findNormal(v1,v3,v4);
 							
 							vert.pos = v1;
+							vert.r=tex_r1;
+							vert.g=tex_g1;
+							vert.b=tex_b1;
 							mesh.push_back(vert);
 							
 							vert.pos = v3;
+							vert.r=tex_r3;
+							vert.g=tex_g3;
+							vert.b=tex_b3;
 							mesh.push_back(vert);
 							
 							vert.pos = v4;
+							vert.r=tex_r4;
+							vert.g=tex_g4;
+							vert.b=tex_b4;
 							mesh.push_back(vert);
 							
 							vert.normal = findNormal(v1,v4,v2);
 							
 							vert.pos = v2;
+							vert.r=tex_r2;
+							vert.g=tex_g2;
+							vert.b=tex_b2;
 							mesh.push_back(vert);
 							
 							vert.pos = v1;
+							vert.r=tex_r1;
+							vert.g=tex_g1;
+							vert.b=tex_b1;
 							mesh.push_back(vert);
 							
 							vert.pos = v4;
+							vert.r=tex_r4;
+							vert.g=tex_g4;
+							vert.b=tex_b4;
 							mesh.push_back(vert);
 						}
 					}
@@ -535,6 +632,9 @@ int loadMap(bsp_header_t* bsp_file) {
 bool renderer_active = false;
 
 GLuint h_matrix;
+GLuint h_ambient;
+GLuint h_light;
+GLuint h_light_vector;
 
 bool was_clicked = false;
 int old_cx = 0;
@@ -567,7 +667,7 @@ void doFrame() {
 			
 			float speed = CAM_MOVE_SPEED;
 			
-			if (glfwGetKey(340)) {
+			if (glfwGetKey(70)) {
 				speed = CAM_FAST_SPEED;
 			}
 			
@@ -592,16 +692,21 @@ void doFrame() {
 		was_clicked=false;
 	}
 	
+	glColorMask(1,1,1,1);
 	glClearColor(.2,.2,.2,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	
-	double fov = 40;
+	glColorMask(1,1,1,0);
+
+	double fov = 75; // this appears to be source's default FOV
 	
 	glm::mat4 matrix = glm::perspective(fov*PI_OVER_180,aspect,1.0,1000000.0);
 	
 	matrix*= glm::lookAt(cam_pos, cam_pos+fwd,glm::vec3(0,0,1));
 	glUniformMatrix4fv(h_matrix,1,GL_FALSE,reinterpret_cast<float*>(&matrix));
-	
+	glUniform4f(h_ambient,ambient_r,ambient_g,ambient_b,1);
+	glUniform4f(h_light,light_r,light_g,light_b,1);
+	glUniform3f(h_light_vector,light_x,light_y,light_z);
+
 	int passes = skybox_active ? 2 : 1;
 
 	for (int pass=1;pass<=passes;pass++) {
@@ -702,14 +807,17 @@ const char* initRenderer(int w, int h) {
 	precision mediump float;
 	
 	uniform mat4 matrix;
+	uniform vec4 ambient;
+	uniform vec4 light;
+	uniform vec3 light_vector;
 	attribute vec4 vPos;
 	attribute vec3 vNorm;
 	attribute vec4 baseColor;
 	varying vec4 color;
     void main()
     {
-		float f = max(dot(vNorm,vec3(.8,.9,1)),.0) + max(dot(vNorm,vec3(-.7,-.6,-.5)),.0);
-		color = f*baseColor;
+		float f = max(dot(vNorm,light_vector),.0);
+		color = baseColor*(ambient+light*f);
     	gl_Position =  matrix*vPos;
     })";
 
@@ -719,7 +827,7 @@ const char* initRenderer(int w, int h) {
 	varying vec4 color;
 	void main () {
 		gl_FragColor = color;
-		gl_FragColor.w = 1.0;
+		gl_FragColor.w = .5;
 	})";
 	
 	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
@@ -737,6 +845,9 @@ const char* initRenderer(int w, int h) {
 	glUseProgram(prog);
 	
 	h_matrix = glGetUniformLocation(prog, "matrix");
+	h_ambient = glGetUniformLocation(prog, "ambient");
+	h_light = glGetUniformLocation(prog, "light");
+	h_light_vector = glGetUniformLocation(prog, "light_vector");
 	
 	// Start Loop
 	emscripten_set_main_loop(doFrame,0,0);

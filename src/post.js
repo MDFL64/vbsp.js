@@ -1,12 +1,29 @@
 
 
+var color_table = {};
+
 Module.ready = function(f) {
-	if (this.calledRun) {
-		f();
-	} else {
-		// Defer until ready!
-		this.onRuntimeInitialized = f;
+	var module = this;
+	var color_req = new XMLHttpRequest();
+
+	color_req.onreadystatechange = function () {
+		if (this.readyState == 4){
+			if (this.status != 200) {
+				console.log("[vbsp.js] Warning! Failed to download color table! Only simple color guessing will be used.");
+			} else {
+				color_table = JSON.parse(this.response);
+			}
+
+			if (module.calledRun) {
+				f();
+			} else {
+				// Defer until ready!
+				module.onRuntimeInitialized = f;
+			}
+		}
 	}
+	color_req.open('GET',"colors.json",true);
+	color_req.send();
 }
 
 
@@ -18,6 +35,9 @@ Module.setCam = Module.cwrap("setCam", null, ["number","number","number","number
 
 var _setSkybox = Module.cwrap("setSkybox", null, ["number","number","number","number"]);
 var _setModel = Module.cwrap("setModel", null, ["number","number","number","number"]);
+var _setAmbient = Module.cwrap("setAmbient", null, ["number","number","number"]);
+var _setLight = Module.cwrap("setLight", null, ["number","number","number"]);
+var _setLightAngle = Module.cwrap("setLightAngle", null, ["number","number"]);
 
 var load_div;
 
@@ -390,35 +410,39 @@ function guess_color(name) {
 	if (name.indexOf("dirt") > -1)
 		return colors.mud;
 		
-	if (name.indexOf("gravel") > -1)
-		return colors.concrete_dark;
 		
-	if (name.indexOf("grass") > -1)
+		if (name.indexOf("grass") > -1)
 		return colors.grass;
-	
-	if (name.indexOf("stone") > -1)
+		
+		if (name.indexOf("stone") > -1)
 		return colors.concrete;
 		
-	if (name.indexOf("water") > -1)
+		if (name.indexOf("water") > -1)
 		return colors.water;
 		
-	if (name.indexOf("slime") > -1)
+		if (name.indexOf("slime") > -1)
 		return 0x808000;
 		
-	if (name.indexOf("button") > -1)
+		if (name.indexOf("button") > -1)
 		return 0xFF0000;
-	
-	if (name.indexOf("sign") > -1)
-		return 0x008002;*/
 		
-	/*if (name.indexOf("red") > -1)
+		if (name.indexOf("sign") > -1)
+		return 0x008002;
+		
+		/*if (name.indexOf("red") > -1)
 		return 0xEB5B5B;
 		
-	if (name.indexOf("blue") > -1)
+		if (name.indexOf("blue") > -1)
 		return 0x5B92EB;*/
+	if (name.indexOf("gravel") > -1)
+		return 5788488;
+		
+	if (name.indexOf("black") > -1)
+		return 0;
 	
-	//if (name.indexOf("building_template") > -1)
-	//	return 0xFF00FF;
+	//console.log(">>> "+name);
+
+	return 0xFFFFFF;
 }
 
 //Module.load = Module.cwrap("load", "number", []);
