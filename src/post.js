@@ -35,6 +35,7 @@ Module.setCam = Module.cwrap("setCam", null, ["number","number","number","number
 
 var _setSkybox = Module.cwrap("setSkybox", null, ["number","number","number","number"]);
 var _setModel = Module.cwrap("setModel", null, ["number","number","number","number"]);
+var _setSkyColor = Module.cwrap("setSkyColor", null, ["number","number","number"]);
 var _setAmbient = Module.cwrap("setAmbient", null, ["number","number","number"]);
 var _setLight = Module.cwrap("setLight", null, ["number","number","number"]);
 var _setLightAngle = Module.cwrap("setLightAngle", null, ["number","number"]);

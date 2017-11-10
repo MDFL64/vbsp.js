@@ -65,8 +65,15 @@ mergeInto(LibraryManager.library, {
 				var yaw = ent.angles.split(" ")[1];
 				_setLightAngle(ent.pitch,yaw);
 			} else if (ent.classname == "worldspawn") {
-				/*console.log(ent.skyname);
-				var color = color_table["skybox/"+ent.skyname+"up"];
+				var color = sky_colors[ent.skyname];
+				console.log(ent.skyname,color);
+				if (color) {
+					var r = color >> 16;
+					var g = (color >> 8) & 0xFF;
+					var b = color & 0xFF;
+					_setSkyColor(r/255,g/255,b/255);
+				}
+				/*var color = color_table["skybox/"+ent.skyname+"up"];
 				console.log(color);
 				if (color)
 					_setSkyColor(color >> 16,(color >> 8) & 0xF,color & 0xF);

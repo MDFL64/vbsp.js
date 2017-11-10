@@ -243,6 +243,12 @@ extern "C" {
 		skybox_scale = scale;
 	}
 
+	void setSkyColor(float r, float g, float b) {
+		sky_r = r;
+		sky_g = g;
+		sky_b = b;
+	}
+
 	void setAmbient(float r, float g, float b) {
 		ambient_r = r;
 		ambient_g = g;
