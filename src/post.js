@@ -26,7 +26,6 @@ Module.ready = function(f) {
 	color_req.send();
 }
 
-
 var _loadMap = Module.cwrap("loadMap", null, ["number","number"]);
 
 var map_request;
