@@ -20,7 +20,7 @@ For a demo, click [here](http://cogg.rocks/vbsp/).
 
 Basic usage is easy, and only requires a few lines of code.
 
-1. Make sure both vbsp.js and vbsp.js.mem are available on your server.
+1. Make sure both vbsp.js, vbsp.wasm, and colors.json are available on your server.
 
     **Warning:** Due to the way the module is loaded, it can not be tested locally and must be served by a webserver.
 
