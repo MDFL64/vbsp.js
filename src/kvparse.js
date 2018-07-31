@@ -31,7 +31,7 @@ function kvparse(data,callback) {
 				k += data.substring( j, i );
 			}
 			else if (data[i] == "\\") {
-				throw "FUCK MY ASS HOLE";	
+				throw "FAILURE A";	
 			}
 		}
 		else if (s==3) {
@@ -49,7 +49,7 @@ function kvparse(data,callback) {
 				v = "";
 			}
 			else if (data[i] == "\\") {
-				throw "FUCK MY ASS HOLE";	
+				throw "FAILURE B";	
 			}
 		}
 		i++;
