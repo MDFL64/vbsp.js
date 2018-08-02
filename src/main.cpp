@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <vector>
+#include <ctype.h>
 
 #include <emscripten/emscripten.h>
 
@@ -352,6 +353,8 @@ int loadMap(bsp_header_t* bsp_file) {
 			
 			//texture_data[texture_info[faces[j].texinfo].texdata].nameStringTableID;
 			
+			vector_t reflect = texture_data[texture_info[faces[j].texinfo].texdata].reflectivity;
+			
 			char* texture_name = &texture_string_data[texture_string_table[texture_data[texture_info[faces[j].texinfo].texdata].nameStringTableID]];
 
 			//printf("ch %s %i\n",texture_name,texture_info[faces[j].texinfo].flags);
@@ -360,17 +363,24 @@ int loadMap(bsp_header_t* bsp_file) {
 			float tex_g;
 			float tex_b;
 			
-			if (sky) { //7AC3FF
+			if (sky) {
 				tex_r = sky_r;
 				tex_g = sky_g;
 				tex_b = sky_b;
 			} else {
-				int color = pick_color(texture_name,0);
-				if (color==-1) // no-draw hinting
+				// Lowercase texture_name
+				int k = 0;
+				while (texture_name[k]) {
+					texture_name[k] = tolower(texture_name[k]);
+					k++;
+				}
+				
+				if (strcmp(texture_name, "tools/toolstrigger") == 0)
 					continue;
-				tex_r = ((color >> 16) & 255) / 255.0f;;
-				tex_g = ((color >> 8) & 255) / 255.0f;
-				tex_b = (color & 255) / 255.0f;
+				
+				tex_r = sqrt(reflect.x);
+				tex_g = sqrt(reflect.y);
+				tex_b = sqrt(reflect.z);
 			}
 			
 			gl_vert_t vert;
@@ -386,7 +396,6 @@ int loadMap(bsp_header_t* bsp_file) {
 					printf("Bad displacement!\n");
 					return 1;
 				}
-				
 				
 				vector_t corner_verts[4];
 				int base_i = -1;
@@ -445,10 +454,6 @@ int loadMap(bsp_header_t* bsp_file) {
 					}
 				}
 				
-
-				
-				
-				
 				for (int y = 0; y< verts_wide-1; y++) {
 					
 					for (int x = 0; x< verts_wide-1; x++) {
@@ -488,81 +493,81 @@ int loadMap(bsp_header_t* bsp_file) {
 							vert.normal = findNormal(v1,v3,v2);
 							
 							vert.pos = v1;
-							vert.r=tex_r1;
-							vert.g=tex_g1;
-							vert.b=tex_b1;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v3;
-							vert.r=tex_r3;
-							vert.g=tex_g3;
-							vert.b=tex_b3;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v2;
-							vert.r=tex_r2;
-							vert.g=tex_g2;
-							vert.b=tex_b2;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.normal = findNormal(v2,v3,v4);
 							
 							vert.pos = v2;
-							vert.r=tex_r2;
-							vert.g=tex_g2;
-							vert.b=tex_b2;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v3;
-							vert.r=tex_r3;
-							vert.g=tex_g3;
-							vert.b=tex_b3;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v4;
-							vert.r=tex_r4;
-							vert.g=tex_g4;
-							vert.b=tex_b4;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 						} else {
 							vert.normal = findNormal(v1,v3,v4);
 							
 							vert.pos = v1;
-							vert.r=tex_r1;
-							vert.g=tex_g1;
-							vert.b=tex_b1;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v3;
-							vert.r=tex_r3;
-							vert.g=tex_g3;
-							vert.b=tex_b3;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v4;
-							vert.r=tex_r4;
-							vert.g=tex_g4;
-							vert.b=tex_b4;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.normal = findNormal(v1,v4,v2);
 							
 							vert.pos = v2;
-							vert.r=tex_r2;
-							vert.g=tex_g2;
-							vert.b=tex_b2;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v1;
-							vert.r=tex_r1;
-							vert.g=tex_g1;
-							vert.b=tex_b1;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 							
 							vert.pos = v4;
-							vert.r=tex_r4;
-							vert.g=tex_g4;
-							vert.b=tex_b4;
+							vert.r=tex_r;
+							vert.g=tex_g;
+							vert.b=tex_b;
 							mesh.push_back(vert);
 						}
 					}
